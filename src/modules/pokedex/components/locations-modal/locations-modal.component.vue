@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     format(index) {
-      if (index === 19) {
+      if (index === 9) {
         return '...';
       }
       return ((index + 1) !== this.locations.length) ? ',' : '';
