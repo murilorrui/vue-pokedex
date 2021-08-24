@@ -8,4 +8,12 @@ export default class PokemonService {
   getPokemon(name) {
     return MainService.get(`/pokemon/${name}`).then((resp) => resp);
   }
+
+  getSpecies(id) {
+    return MainService.get(`/pokemon-species/${id}/`).then((resp) => resp);
+  }
+
+  getEvolutionChain(url) {
+    return MainService.get(url).then((resp) => resp);
+  }
 }

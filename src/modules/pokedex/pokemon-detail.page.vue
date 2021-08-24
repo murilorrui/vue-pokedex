@@ -1,7 +1,16 @@
 <template lang="html">
-  <div class="pokemon-detail">
+  <div class="pokemon-detail" v-if="!loading">
     <div class="pokemon-detail__header">
-      <p>{{ pokemon.name }}</p>
+      <button
+        type="button"
+        class="pokemon-detail__back-button"
+        @click="backRoute"
+      >
+        &lt;
+      </button>
+      <div class="pokemon-detail__header-title">
+        <p>{{ pokemon.name }}</p>
+      </div>
     </div>
     <div class="pokemon-detail__display-img">
       <img
@@ -31,27 +40,92 @@
       </div>
     </div>
     <div class="pokemon-detail__buttons">
-      <button class="pokemon-detail__button" type="button" name="button">EVOLUTIONS</button>
-      <button class="pokemon-detail__button" type="button" name="button">LOCATIONS</button>
-      <button class="pokemon-detail__button" type="button" name="button">GAMES</button>
+      <button
+        class="pokemon-detail__button"
+        type="button"
+        name="button"
+        v-if="hasEvolution"
+        @click="toggleModal"
+      >
+        EVOLUTIONS
+      </button>
+      <button
+        class="pokemon-detail__button"
+        type="button"
+        name="button"
+        @click="toggleModal"
+      >
+        LOCATIONS
+      </button>
+      <button
+        class="pokemon-detail__button"
+        type="button"
+        name="button"
+        @click="toggleModal"
+      >
+        GAMES
+      </button>
     </div>
+    <evolution-modal :modalStatus="evolutionModal"/>
   </div>
 </template>
 
 <script>
 import PokemonService from '@/shared/services/pokemon.service';
+import EvolutionModal from './components/evolution-modal/evolution-modal.component.vue';
 
 export default {
+  components: {
+    EvolutionModal,
+  },
   data: () => ({
     pokemonService: new PokemonService(),
     pokemon: {},
+    evolutions: [],
+    loading: true,
+    evolutionModal: false,
+    evolutionChain: '',
+    hasEvolution: false,
   }),
   methods: {
     getPokemon(name) {
       this.pokemonService.getPokemon(name).then(({ data }) => {
-        console.log(data);
+        this.loading = false;
         this.pokemon = data;
+        this.getSpecies();
       });
+    },
+    getSpecies() {
+      this.pokemonService.getSpecies(this.pokemon.name).then(({ data }) => {
+        this.loading = false;
+        this.evolutionChain = data.evolution_chain.url;
+        this.getEvolutionChain();
+      });
+    },
+    getEvolutionChain() {
+      this.pokemonService.getEvolutionChain(this.evolutionChain).then(({ data }) => {
+        this.loading = false;
+        this.evolutions = this.mapChain(data.chain);
+        console.log(this.evolutions);
+      });
+    },
+    mapChain(chain) {
+      const names = [];
+      if (chain.evolves_to.length > 0) {
+        this.hasEvolution = true;
+        names.push(chain.species.name);
+        names.push(chain.evolves_to[0].species.name);
+        if (chain.evolves_to[0].evolves_to.length > 0) {
+          names.push(chain.evolves_to[0].evolves_to[0].species.name);
+        }
+      }
+      return names;
+    },
+    backRoute() {
+      this.$router.push('/');
+    },
+    toggleModal() {
+      this.evolutionModal = !this.evolutionModal;
     },
   },
   created() {
@@ -65,15 +139,38 @@ export default {
   .pokemon-detail {
     padding: 8px;
     &__header {
+      display: flex;
+    }
+    &__header-title {
       line-height: 40px;
       font-weight: bold;
       text-transform: capitalize;
-      background: #f5efe9;
       border-radius: 8px;
+      background: #f5efe9;
       border: 4px solid #a7a8a2;
       box-shadow: 3px 3px 0px 0 rgba(138, 132, 126, 1);
       color: #555c56;
       letter-spacing: 3px;
+      display: flex;
+      justify-content: center;
+      width: 100%
+    }
+    &__back-button {
+      background: transparent;
+      color: #555c56;
+      border: none;
+      font-weight: bold;
+      border: 4px solid #a7a8a2;
+      border-radius: 8px;
+      color: #555c56;
+      background: linear-gradient(#f5efe9 70%, #a7a8a2);
+      margin-right: 8px;
+      width: 64px;
+      box-shadow: 3px 3px 0px 0 rgba(138, 132, 126, 1);
+      cursor: pointer;
+      &:hover {
+        background: linear-gradient(#a7a8a2 70%, #f5efe9);
+      }
     }
     &__specs {
       border-radius: 8px;
@@ -127,14 +224,16 @@ export default {
       margin-top: 16px;
     }
     &__button {
+      cursor: pointer;
       margin-bottom: 16px;
       line-height: 60px;
       font-weight: bold;
-      border: 4px solid #8a847e;
+      border: 4px solid #a7a8a2;
       border-radius: 8px;
       color: #555c56;
       background: linear-gradient(#f5efe9 70%, #a7a8a2);
       letter-spacing: 3px;
+      box-shadow: 3px 5px 0px 0 rgba(138, 132, 126, 1);
       &:hover {
         background: linear-gradient(#a7a8a2 70%, #f5efe9);
       }

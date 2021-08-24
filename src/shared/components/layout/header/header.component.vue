@@ -57,6 +57,7 @@ export default {
   width: 100%;
   clip-path: polygon(0 0, 100% 0, 100% 41px, 270px 41px, 200px 100%, 0 100%);
   z-index: 1;
+  border-radius: 8px;
   background: #b7284c;
   .container {
     display: flex;
@@ -65,6 +66,7 @@ export default {
     height: 75px;
     clip-path: polygon(0 0, 100% 0, 100% 38px, 270px 38px, 200px 72px, 0 72px);
     background: #e7405c;
+    border-radius: 8px;
   }
 }
 </style>

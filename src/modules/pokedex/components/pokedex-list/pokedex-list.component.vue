@@ -1,30 +1,29 @@
 <template lang="html">
-  <table class="pokedex-list">
-    <tbody>
-      <tr
-        v-for="pokemon in pokemons"
-        :key="pokemon.name"
-        @click="openDetails(pokemon.name)"
-      >
-        <td class="pokedex-list__display-img">
-          <img
-            class="pokedex-list__img"
-            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`"
-          >
-        </td>
-        <td>
-          No. {{ formatNumber(pokemon.id) }}
-        </td>
-        <td>
-          {{ pokemon.name }}
-        </td>
-        <td class="pokedex-list__display-pokeball">
-          <img src="../../../../assets/pokebola.png">
-        </td>
-      </tr>
-      <infinite-loading @infinite="infiniteHandler" />
-    </tbody>
-  </table>
+  <div class="pokedex-list">
+    <div
+      class="pokedex-list__item"
+      v-for="pokemon in pokemons"
+      :key="pokemon.name"
+      @click="openDetails(pokemon.name)"
+    >
+      <div class="pokedex-list__display-img">
+        <img
+          class="pokedex-list__img"
+          :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`"
+        >
+      </div>
+      <div class="pokedex-list__number">
+        No. {{ formatNumber(pokemon.id) }}
+      </div>
+      <div class="pokedex-list__name">
+        {{ pokemon.name }}
+      </div>
+      <div class="pokedex-list__display-pokeball">
+        <img src="../../../../assets/pokebola.png">
+      </div>
+    </div>
+    <infinite-loading @infinite="infiniteHandler" />
+  </div>
 </template>
 
 <script>
@@ -61,24 +60,42 @@ export default {
     font-weight: bold;
     text-transform: capitalize;
     border-collapse: collapse;
-    tbody tr:hover {
-      background: #d7e2e4;
+    color: #555c56;
+    font-size: 12px;
+    &__item {
+      border-radius: 8px;
+      background: #f5efe9;
+      border: 4px solid #a7a8a2;
+      box-shadow: 3px 3px 0px 0 rgba(138, 132, 126, 1);
+      color: #555c56;
+      display: flex;
+      align-items: center;
+      margin: 8px;
+      padding: 0 8px;
+      cursor: pointer;
+      &:hover {
+        background: #d0cfcf;
+      }
     }
-    td {
-      text-align: left;
-      border-bottom: 1px solid #d7e2e4;
-      padding: 8px
+    &__number {
+      flex-basis: 25%;
+    }
+    &__name {
+      flex-basis: 50%;
     }
     &__display-pokeball {
-      width: 40px;
-      opacity: .3
+      width: 20px;
+      opacity: .3;
+      &:hover {
+        opacity: 1;
+      }
     }
     &__display-img {
       overflow: hidden;
-      width: 50px
+      flex-basis: 20%;
     }
     &__img {
-      width: 80px;
+      width: 100px;
     }
   }
 </style>

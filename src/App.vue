@@ -1,9 +1,12 @@
 <template>
-  <div class="pokedex">
+  <div
+    class="main"
+    :style="{ minWidth: getWidth }"
+  >
     <div id="nav">
       <app-header/>
     </div>
-    <div id="teste">
+    <div class="container">
       <div class="border-inset">
         <div id="app">
           <router-view id="router-link"/>
@@ -20,19 +23,39 @@ export default {
   components: {
     AppHeader,
   },
+  computed: {
+    getWidth() {
+      const { innerWidth } = window;
+      return innerWidth > 425 ? '425px' : `${innerWidth - 20}px`;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
   html {
-    background: #ca314a;
+    background-image: url('./assets/background.jpg');
   }
 
   body {
     margin: 0;
   }
 
-  #teste {
+  .main {
+    border: 0;
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 425px;
+    background: #ca314a;
+    box-shadow: 3px 3px 0px 0 #b7284c;
+    border-radius: 8px;
+  }
+
+  .container {
     padding: 20px;
   }
 
@@ -47,7 +70,7 @@ export default {
   }
 
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -58,6 +81,7 @@ export default {
     height: 30rem;
     overflow-y: scroll;
     -ms-overflow-style: none;
+    position: relative;
     scrollbar-width: none;
     border: 5px inset #8a847e;
     &::-webkit-scrollbar {
@@ -68,6 +92,7 @@ export default {
   #nav {
     height: 90px
   }
+
   a {
     font-weight: bold;
     color: #2c3e50;
