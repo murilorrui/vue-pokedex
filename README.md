@@ -1,24 +1,12 @@
-# my-app-pokemon
+# VueJs + PokeApi
 
-## Project setup
-```
-npm install
-```
+## Node
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Nodejs Version 12.11.1 or Later
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Run `npm i`
 
-### Lints and fixes files
+### Dev server
 ```
-npm run lint
+Run `npm start` for a dev server. Navigate to `http://localhost:8080/`
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
