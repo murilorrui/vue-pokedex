@@ -9,13 +9,11 @@
 </template>
 
 <script>
-import PokedexList from './components/pokedex-list/pokedex-list.component.vue';
 import PokemonService from '@/shared/services/pokemon.service';
-// import PokemonCard from '@/shared/components/pokemon-card/pokemon-card.component.vue';
+import PokedexList from '../../components/pokedex-list/pokedex-list.component.vue';
 
 export default {
   components: {
-    // PokemonCard,
     PokedexList,
   },
   data: () => ({
@@ -51,6 +49,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

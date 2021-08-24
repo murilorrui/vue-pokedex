@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Modal from '@/shared/components/layout/modal/modal.component.vue';
+import Modal from '@/shared/components/modal/modal.component.vue';
 
 export default {
   components: {

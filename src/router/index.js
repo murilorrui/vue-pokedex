@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Pokedex from '../modules/pokedex/pokedex.page.vue';
-import PokemonDetail from '../modules/pokedex/pokemon-detail.page.vue';
+import Pokedex from '../modules/pokedex/pages/pokedex/pokedex.page.vue';
+import PokemonDetail from '../modules/pokedex/pages/pokemon-detail/pokemon-detail.page.vue';
 
 Vue.use(VueRouter);
 

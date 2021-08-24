@@ -47,6 +47,8 @@ export default {
     padding: 20px;
     width: 70%;
     position: relative;
+    margin-top: 145px;
+    max-height: 28rem;
   }
 
   .close {

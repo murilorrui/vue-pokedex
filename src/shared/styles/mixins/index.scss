@@ -1,6 +1,6 @@
 @mixin modifiers($map, $attribute) {
 	@each $key, $value in $map {
-		&--#{$key} {
+		&__#{$key} {
 			#{$attribute}: $value;
 		}
 	}

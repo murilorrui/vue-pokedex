@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      primaryButton: { style: { width: '50px', height: '50px' }, class: 'bg--blue-00' },
+      primaryButton: { style: { width: '50px', height: '50px' }, class: 'bg__blue-00' },
       buttons: [
         {
           style: {
@@ -25,7 +25,7 @@ export default {
             width: '20px',
             height: '20px',
           },
-          class: 'bg--red',
+          class: 'bg__red',
         },
         {
           style: {
@@ -34,7 +34,7 @@ export default {
             width: '20px',
             height: '20px',
           },
-          class: 'bg--yellow',
+          class: 'bg__yellow',
         },
         {
           style: {
@@ -43,7 +43,7 @@ export default {
             width: '20px',
             height: '20px',
           },
-          class: 'bg--green',
+          class: 'bg__green',
         },
       ],
     };

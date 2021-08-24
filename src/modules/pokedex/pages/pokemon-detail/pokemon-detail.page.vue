@@ -22,7 +22,7 @@
       <div class="pokemon-detail__types">
         <div
           class="pokemon-detail__type"
-          :class="`bg--${item.type.name}`"
+          :class="`bg__${item.type.name}`"
           v-for="item in pokemon.types"
           :key="item.slot"
         >
@@ -90,9 +90,9 @@
 
 <script>
 import PokemonService from '@/shared/services/pokemon.service';
-import EvolutionModal from './components/evolution-modal/evolution-modal.component.vue';
-import LocationsModal from './components/locations-modal/locations-modal.component.vue';
-import GamesModal from './components/games-modal/games-modal.component.vue';
+import EvolutionModal from '../../components/evolution-modal/evolution-modal.component.vue';
+import LocationsModal from '../../components/locations-modal/locations-modal.component.vue';
+import GamesModal from '../../components/games-modal/games-modal.component.vue';
 
 export default {
   components: {
@@ -127,7 +127,6 @@ export default {
         });
       });
       this.evolutions.sort((a, b) => a.id < b.id);
-      console.log(this.evolutions);
     },
     getSpecies() {
       this.pokemonService.getSpecies(this.pokemon.name).then(({ data }) => {
