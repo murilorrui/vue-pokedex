@@ -45,7 +45,7 @@
         type="button"
         name="button"
         v-if="hasEvolution"
-        @click="toggleModal"
+        @click="toggleEvolutionModal"
       >
         EVOLUTIONS
       </button>
@@ -53,7 +53,7 @@
         class="pokemon-detail__button"
         type="button"
         name="button"
-        @click="toggleModal"
+        @click="toggleLocationModal"
       >
         LOCATIONS
       </button>
@@ -61,29 +61,54 @@
         class="pokemon-detail__button"
         type="button"
         name="button"
-        @click="toggleModal"
+        @click="toggleGamesModal"
       >
         GAMES
       </button>
     </div>
-    <evolution-modal :modalStatus="evolutionModal"/>
+    <evolution-modal
+      v-if="evolutionModal"
+      :modalStatus="evolutionModal"
+      :evolutions="evolutions"
+      :evolutionsNames="evolutionsNames"
+      :closeModal="closeModal"
+    />
+    <locations-modal
+      v-if="locationsModal"
+      :modalStatus="locationsModal"
+      :locations="locations"
+      :closeModal="closeModal"
+    />
+    <games-modal
+      v-if="gamesModal"
+      :modalStatus="gamesModal"
+      :games="pokemon.game_indices"
+      :closeModal="toggleGamesModal"
+    />
   </div>
 </template>
 
 <script>
 import PokemonService from '@/shared/services/pokemon.service';
 import EvolutionModal from './components/evolution-modal/evolution-modal.component.vue';
+import LocationsModal from './components/locations-modal/locations-modal.component.vue';
+import GamesModal from './components/games-modal/games-modal.component.vue';
 
 export default {
   components: {
     EvolutionModal,
+    LocationsModal,
+    GamesModal,
   },
   data: () => ({
     pokemonService: new PokemonService(),
     pokemon: {},
+    evolutionsNames: [],
     evolutions: [],
     loading: true,
     evolutionModal: false,
+    locationsModal: false,
+    gamesModal: false,
     evolutionChain: '',
     hasEvolution: false,
   }),
@@ -95,18 +120,30 @@ export default {
         this.getSpecies();
       });
     },
+    getPokemonEvolutions() {
+      this.evolutionsNames.forEach((item) => {
+        this.pokemonService.getPokemon(item).then(({ data }) => {
+          this.evolutions.push(data);
+        });
+      });
+      this.evolutions.sort((a, b) => a.id < b.id);
+      console.log(this.evolutions);
+    },
     getSpecies() {
       this.pokemonService.getSpecies(this.pokemon.name).then(({ data }) => {
-        this.loading = false;
         this.evolutionChain = data.evolution_chain.url;
         this.getEvolutionChain();
       });
     },
     getEvolutionChain() {
       this.pokemonService.getEvolutionChain(this.evolutionChain).then(({ data }) => {
-        this.loading = false;
-        this.evolutions = this.mapChain(data.chain);
-        console.log(this.evolutions);
+        this.evolutionsNames = this.mapChain(data.chain);
+      });
+    },
+    getPokemonLocations() {
+      this.pokemonService.getPokemonLocations(this.pokemon.id).then(({ data }) => {
+        this.locations = data;
+        this.locationsModal = !this.locationsModal;
       });
     },
     mapChain(chain) {
@@ -124,8 +161,21 @@ export default {
     backRoute() {
       this.$router.push('/');
     },
-    toggleModal() {
+    toggleEvolutionModal() {
+      this.getPokemonEvolutions();
       this.evolutionModal = !this.evolutionModal;
+    },
+    toggleLocationModal() {
+      this.getPokemonLocations();
+    },
+    toggleGamesModal() {
+      this.gamesModal = !this.gamesModal;
+    },
+    closeModal() {
+      this.evolutionModal = false;
+      this.locationsModal = false;
+      this.evolutions = [];
+      this.locations = [];
     },
   },
   created() {

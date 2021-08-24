@@ -1,8 +1,15 @@
 <template lang="html">
   <div id="myModal" class="modal" v-if="modalStatus">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>teste</p>
+      <span
+        @click="closeModal"
+        class="close"
+      >
+        &times;
+      </span>
+      <div class="">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +18,7 @@
 export default {
   props: {
     modalStatus: Boolean,
+    closeModal: Function,
   },
 };
 </script>
@@ -38,13 +46,16 @@ export default {
     margin: 15% auto;
     padding: 20px;
     width: 70%;
+    position: relative;
   }
 
   .close {
     color: #aaa;
-    float: right;
     font-size: 28px;
     font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 16px;
   }
 
   .close:hover,

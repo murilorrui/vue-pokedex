@@ -13,6 +13,10 @@ export default class PokemonService {
     return MainService.get(`/pokemon-species/${id}/`).then((resp) => resp);
   }
 
+  getPokemonLocations(id) {
+    return MainService.get(`/pokemon/${id}/encounters`).then((resp) => resp);
+  }
+
   getEvolutionChain(url) {
     return MainService.get(url).then((resp) => resp);
   }
