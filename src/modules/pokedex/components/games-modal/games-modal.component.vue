@@ -7,7 +7,7 @@
       <div class="modal-game">
         <template v-if="games && games.length > 0">
           <span
-            v-for="(game, index) in games.slice(0, 10)"
+            v-for="(game, index) in games"
             :key="game.version.name"
             class="modal-game__name"
           >
@@ -36,9 +36,6 @@ export default {
   },
   methods: {
     format(index) {
-      if (index === 9) {
-        return '...';
-      }
       return ((index + 1) !== this.games.length) ? ',' : '';
     },
   },

@@ -7,7 +7,7 @@
       <div class="modal-location">
         <template v-if="locations && locations.length > 0">
           <span
-            v-for="(location, index) in locations.slice(0, 10)"
+            v-for="(location, index) in locations.slice(0, 20)"
             :key="location.location_area.name"
             class="modal-location__name"
           >
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     format(index) {
-      if (index === 9) {
+      if (index === 19) {
         return '...';
       }
       return ((index + 1) !== this.locations.length) ? ',' : '';
