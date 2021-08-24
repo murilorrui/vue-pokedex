@@ -5,6 +5,7 @@ You can check this project running [here](https://vue-pokedex-2021.web.app/).
 
 This project uses VueJs, Axios, Vue Infinite Loading.
 - [VueJs](https://vuejs.org/)
+- [PokeApi](https://pokeapi.co/docs/v2)
 - [Axios](https://axios-http.com/)
 - [Vue Infinite Loading](https://www.npmjs.com/package/vue-infinite-loading)
 
