@@ -19,6 +19,7 @@ $ git clone https://github.com/murilorrui/vue-pokedex.git
 $ cd vue-pokedex
 
 Run `npm i`
+```
 
 ### Dev server
 ```
