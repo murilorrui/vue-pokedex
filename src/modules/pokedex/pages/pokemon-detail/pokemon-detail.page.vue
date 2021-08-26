@@ -30,13 +30,15 @@
         </div>
       </div>
       <div class="pokemon-detail__abilities">
-        <p>Abilities: &nbsp;</p>
-        <span
+        <span>Abilities: &nbsp;</span>
+        <div class="pokemon-detail__display-abilities">
+          <span
           v-for="(item, index) in pokemon.abilities"  :key="item.slot"
           class="pokemon-detail__abilities-name"
-        >
-          {{ item.ability.name }}{{ ((index + 1) !== pokemon.abilities.length) ? ', &nbsp;' : '' }}
+          >
+          {{ item.ability.name }}{{ ((index + 1) !== pokemon.abilities.length) ? ', ' : '' }}
         </span>
+        </div>
       </div>
     </div>
     <div class="pokemon-detail__buttons">
@@ -256,11 +258,15 @@ export default {
       letter-spacing: 3px;
     }
     &__abilities {
-      line-height: 40px;
+      margin: 8px 0;
       display: flex;
       font-weight: bold;
       padding: 0 16px;
       color: #555c56;
+    }
+    &__display-abilities {
+      max-width: 180px;
+      text-align: left;
     }
     &__abilities-name {
       text-transform: uppercase;
